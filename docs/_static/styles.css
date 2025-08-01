@@ -14,8 +14,9 @@ p, li, dt, dd {
 pre {
   overflow: auto;
 }
-@media only screen {
+@media only screen and (max-width: 1200px) {
   body {
+    max-width: auto;
     margin: auto;
     padding: 1rem;
   }
