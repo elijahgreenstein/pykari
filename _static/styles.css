@@ -1,0 +1,33 @@
+/* Pykari site CSS */
+body {
+  max-width: 40rem;
+  margin: auto;
+  padding: 1rem;
+}
+pre {
+  background: #EEE;
+  padding: 0.5rem;
+}
+p, li, dt, dd {
+  line-height: 1.4rem;
+}
+pre {
+  overflow: auto;
+}
+@media (max-width: 600px) {
+  p, li, dt, dd {
+    line-height: 1.5rem;
+    font-size: 1.2rem;
+  }
+  pre, pre span, code {
+    font-size: 1rem;
+  }
+}
+a#home {
+  text-decoration: none;
+  font-family: Avenir, Verdana, sans-serif;
+}
+a#home:link, a#home:visited {
+  color: rgb(242, 163, 72);
+  font-size: 1.5rem;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pykari Project Organization</title>
+  <link rel="stylesheet" href="../_static/styles.css">
+  <link rel="stylesheet" href="../_static/highlight.css">
+</head>
+<body>
+<div id="menu">
+<em><a id="home" href="../index.html">Pykari: Static Sites in a Flash</a></em>
+</div>
+<h1 id="title">Pykari Project Organization</h1>
+<p>The organization of a Pykari project is loosely based on <a href="https://www.sphinx-doc.org/en/master/index.html">Sphinx</a>. When you use the <a href="cli.html">command line tools</a> to set up a Pykari project, the setup tool creates the following files and subdirectories in the project directory:</p>
+<pre><code>myproject/
+    _build/
+    _pykari.yaml
+    _static/
+        styles.css
+    _templates/
+        default.html
+    index.md
+    Makefile
+</code></pre><dl>
+<dt><code>_build</code></dt>
+<dd>
+<p>The build directory. Pykari will write site files here.</p>
+</dd>
+<dt><code>_pykari.yaml</code></dt>
+<dd>
+<p>The <a href="configuration.html">configuration file</a> for a Pykari project.</p>
+</dd>
+<dt><code>_static</code></dt>
+<dd>
+<p>The directory for static files (e.g. CSS style sheets).</p>
+<p><code>styles.css</code> is an empty CSS style sheet for users to customize.</p>
+</dd>
+<dt><code>_templates</code></dt>
+<dd>
+<p>The directory for HTML templates. Pykari will use these templates to build complete HTML pages from Markdown source files.</p>
+<p><code>default.html</code> is a basic, default template for users to customize.</p>
+</dd>
+<dt><code>Makefile</code></dt>
+<dd>
+<p>Use <code>make</code> to generate the website from source; use <code>make clean</code> to clean up the build directory.</p>
+</dd>
+</dl>
+</body>
+</html>

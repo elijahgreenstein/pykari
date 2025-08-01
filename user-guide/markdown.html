@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pykari Markdown</title>
+  <link rel="stylesheet" href="../_static/styles.css">
+  <link rel="stylesheet" href="../_static/highlight.css">
+</head>
+<body>
+<div id="menu">
+<em><a id="home" href="../index.html">Pykari: Static Sites in a Flash</a></em>
+</div>
+<h1 id="title">Pykari Markdown</h1>
+<p>Pykari generates HTML webpages in the build directory from Markdown files in the source directory. Add Markdown files with the extension <code>.md</code> to the source directory to add new pages to your website.</p>
+<p>When you use the <a href="cli.html">Pykari command line tools</a> to generate your website, Pykari will look for all files with the extension <code>.md</code> in the source directory, convert the contents to HTML, and write corresponding HTML files in the build directory.</p>
+<h2 id="commonmark">CommonMark</h2>
+<p>Pykari uses the <a href="https://markdown-it-py.readthedocs.io/en/latest/">Markdown-It-Py</a> Markdown parser to convert Markdown to HTML. The Pykari parser is configured with the <a href="https://markdown-it-py.readthedocs.io/en/latest/using.html#the-parser">default CommonMark settings</a>, and you can follow <a href="https://commonmark.org/">CommonMark</a> conventions to format source documents.</p>
+<h2 id="additional-markdown-settings">Additional Markdown Settings</h2>
+<p>The Pykari parser also uses several additional settings and <a href="https://mdit-py-plugins.readthedocs.io/en/latest/">Markdown-It-Py plugins</a> to extend the CommonMark syntax.</p>
+<h3 id="typography">Typography</h3>
+<p>The <a href="https://markdown-it-py.readthedocs.io/en/latest/using.html#typographic-components">Markdown-It-Py typographic settings</a> are enabled. Single and double quotes will be replaced with opening and closing quotes, and certain character patterns will be replaced (e.g. <code>...</code> will be replaced with the <code>…</code> character).</p>
+<h3 id="tables">Tables</h3>
+<p>The core <a href="https://markdown-it-py.readthedocs.io/en/latest/plugins.html">Markdown-It-Py table plugin</a> is enabled. Follow <a href="https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables">GitHub Markdown conventions</a> to create tables:</p>
+<div class="highlight"><pre><span></span>| Column A Header      | Column B Header      |
+| -------------------- | -------------------- |
+| Column A, Row 1 Cell | Column B, Row 1 Cell |
+| Column A, Row 2 Cell | Column B, Row 2 Cell |
+</pre></div>
+<h3 id="strikethrough-text">Strikethrough Text</h3>
+<p>The core <a href="https://markdown-it-py.readthedocs.io/en/latest/plugins.html">Markdown-It-Py strikethrough plugin</a> is enabled. Use <code>~~</code> characters for strikethrough text:</p>
+<div class="highlight"><pre><span></span><span class="gd">~~This text is stricken.~~</span>
+</pre></div>
+<h3 id="definition-lists">Definition Lists</h3>
+<p>The Markdown-It-Py <a href="https://mdit-py-plugins.readthedocs.io/en/latest/#definition-lists">definition list plugin</a> is enabled:</p>
+<div class="highlight"><pre><span></span>Item 1
+: Definition, first paragraph.
+
+  Definition, second paragraph.
+
+Item 2
+~ Compact definition, first paragraph.
+~ Compact definition, second paragraph.
+</pre></div>
+<h2 id="links">Links</h2>
+<p>To link to other files in a Pykari project, use the relative path from the source file to the other file, but change the extension to <code>.html</code>. Use two full stop characters (<code>..</code>) to represent the parent directory of the directory containing the file.</p>
+<p>Here is an example project:</p>
+<pre><code>myproject/
+    index.md
+    posts/
+        technical/
+            essay.md
+        personal/
+            travel.md
+</code></pre><p>To link to the <code>essay</code> page from the <code>travel</code> page, write the following in <code>travel.md</code>:</p>
+<div class="highlight"><pre><span></span>A [<span class="nt">link</span>](<span class="na">../technical/essay.html</span>) to the technical essay.
+</pre></div>
+<p>Note that <code>travel.md</code> is in the <code>personal</code> directory. The two full stop characters (<code>..</code>) represent the parent directory of <code>personal</code>: <code>posts</code>.</p>
+<p>To link to the <code>index</code> page from the <code>travel</code> page, write the following in <code>travel.md</code>:</p>
+<div class="highlight"><pre><span></span>A [<span class="nt">link</span>](<span class="na">../../index.html</span>) to the index page.
+</pre></div>
+<h2 id="metadata">Metadata</h2>
+<p>Every Markdown file <strong>must</strong> begin with a metadata block; Pykari will raise an error if no metadata is found. Include metadata for each file in a <a href="https://yaml.org/">YAML-formatted</a> block at the top of the Markdown file, preceded and followed by at lines containing at least three hyphen characters (<code>---</code>). For example:</p>
+<pre><code>---
+title: Insightful Essay
+date: 2025-07-31
+---
+
+# First Section
+</code></pre><p>Pykari will use the metadata to render <a href="static.html#templates">templates</a>. Include variables in a <a href="https://jinja.palletsprojects.com/en/stable/">Jinja</a>-formatted template to indicate where metadata should appear in a document. For example:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;date&quot;</span><span class="p">&gt;</span>{{ date }}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+{{ BODY }}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>The <code>{{ title }}</code> and <code>{{ date }}</code> <a href="https://jinja.palletsprojects.com/en/stable/templates/#expressions">Jinja expressions</a> will be replaced with the corresponding values from the metadata.</p>
+<p>Note that the example above uses the default <code>BODY</code> variable to indicate where the body content of the Markdown file should appear in <a href="static.html#templates">the template</a>. Refer to the <a href="../howto/howto-template.html">guide to writing Pykari templates</a> for details about how to create a custom template.</p>
+<h2 id="headings">Headings</h2>
+<h3 id="levels">Levels</h3>
+<p>It is recommended that the HTML <code>&lt;h1&gt;</code> tag be reserved for the title. Include the title in the metadata, and add an <code>&lt;h1&gt;</code> tag with the <code>{{ title }}</code> expression to your HTML templates. Markdown headings can be used for section levels beneath <code>&lt;h1&gt;</code>. Pykari uses the <a href="https://github.com/elijahgreenstein/headingmd">Heading, MD</a> extension to Markdown-It-Py to shift HTML headings down one level from Markdown heading levels in the source file.</p>
+<p>Here is an example of Markdown headings:</p>
+<pre><code># First Section
+
+## First Subsection
+</code></pre><p>Pykari will render the above into HTML as:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h2</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;first-section&quot;</span><span class="p">&gt;</span>First Section<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;first-subsection&quot;</span><span class="p">&gt;</span>First Subsection<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</pre></div>
+<p>Note that the level-one Markdown heading, <code># First Section</code>, is rendered with a level-two HTML tag (<code>&lt;h2&gt;</code>).</p>
+<p>In short:</p>
+<ul>
+<li>Use a <code>title</code> variable in the metadata for the top-level <code>&lt;h1&gt;</code> section title.</li>
+<li>Use Markdown headings from levels one to five for subsequent section levels (HTML levels <code>&lt;h2&gt;</code> to <code>&lt;h6&gt;</code>).</li>
+</ul>
+<h3 id="heading-anchors">Heading Anchors</h3>
+<p>The <a href="https://mdit-py-plugins.readthedocs.io/en/latest/#heading-anchors">heading anchors plugin</a> is enabled with <code>max_level</code> set to <code>3</code>. Level-one and two Markdown headings (which Pykari renders as <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> HTML headings) will automatically be assigned an <code>id</code> attribute based on the heading text. As seen in the previous example, the heading <code># First Section</code> is rendered into HTML with the attribute <code>id=&quot;first-section&quot;</code>.</p>
+<h3 id="syntax-highlighting">Syntax Highlighting</h3>
+<p>Pykari uses the <a href="https://github.com/elijahgreenstein/highlight-it">Highlight-It</a> extension to Markdown-It-Py to configure syntax highlighting with <a href="https://pygments.org/">Pygments</a>. To highlight a block of code, include the <a href="https://pygments.org/languages/">Pygments short name</a> for the programming language immediately after the first code-block fence:</p>
+<div class="highlight"><pre><span></span><span class="sb">```python</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello,&quot;</span> <span class="n">x</span><span class="p">)</span>
+<span class="sb">```</span>
+</pre></div>
+<p>Note that highlighting styles will not be included in the output HTML file. To set up syntax highlighting, follow the <a href="https://pygments.org/docs/cmdline/#generating-styles">Pygments instructions to generate a CSS style sheet</a> and write the file to the <code>_static</code> directory. For example:</p>
+<div class="highlight"><pre><span></span>pygmentize<span class="w"> </span>-f<span class="w"> </span>html<span class="w"> </span>-S<span class="w"> </span>default<span class="w"> </span>-a<span class="w"> </span>.highlight<span class="w"> </span>&gt;<span class="w"> </span>_static/highlight.css
+</pre></div>
+<p>Then, include a link to the style sheet in your HTML templates:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/highlight.css&quot;</span><span class="p">&gt;</span>
+</pre></div>
+<p>Note that the example above uses the default <code>ROOT</code> variable to indicate the relative path to the source directory from the file. Refer to the <a href="../howto/howto-template.html">guide to writing Pykari templates</a> for details about how to create a custom template.</p>
+</body>
+</html>

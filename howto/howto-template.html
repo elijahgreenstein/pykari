@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How to Write a Pykari Template</title>
+  <link rel="stylesheet" href="../_static/styles.css">
+  <link rel="stylesheet" href="../_static/highlight.css">
+</head>
+<body>
+<div id="menu">
+<em><a id="home" href="../index.html">Pykari: Static Sites in a Flash</a></em>
+</div>
+<h1 id="title">How to Write a Pykari Template</h1>
+<h2 id="setup">Setup</h2>
+<p>Create a Pykari project with the command line interface:</p>
+<div class="highlight"><pre><span></span>pykari<span class="w"> </span>--setup<span class="w"> </span>mytemplate
+</pre></div>
+<p>Pykari will create a default template, <code>default.html</code>, in <code>mytemplate/_templates</code>, as well as an empty style sheet, <code>styles.css</code>, in <code>mytemplate/_static</code>.</p>
+<h2 id="default-template">Default Template</h2>
+<p>Open <code>mytemplate/_templates/default.html</code>. It contains a very basic template:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/styles.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+{{ BODY }}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>The template includes a <code>title</code> variable set within double curly braces, <code>{{ title }}</code>, which <a href="https://jinja.palletsprojects.com/en/stable/templates/#expressions">Jinja uses to represent expressions</a>. Pykari will look for a value for <code>title</code> in the metadata of each Markdown source file. All Markdown documents that use this template <strong>must</strong>, therefore, include <code>title</code> in the <a href="../user-guide/markdown.html#metadata">metadata block</a>. For example:</p>
+<pre><code>---
+title: Creative Anecdote
+---
+</code></pre><p>Note that the template also includes <a href="../user-guide/static.html#variables">two variables</a> that Pykari creates each time it processes a Markdown source file:</p>
+<dl>
+<dt><code>ROOT</code></dt>
+<dd>Pykari will replace <code>{{ ROOT }}</code> with the relative path from the Markdown file to the source directory. In the HTML, this will correspond to the relative path from the HTML file to the build directory. Use the <code>ROOT</code> variable to ensure that links in the template work for all project pages, regardless of their location relative to the source/build directory.</dd>
+<dt><code>BODY</code></dt>
+<dd>Pykari will replace <code>{{ BODY }}</code> with the content of a Markdown file, converted to HTML.</dd>
+</dl>
+<h2 id="custom-template">Custom Template</h2>
+<h3 id="create-a-new-template">Create a New Template</h3>
+<p>Change into the project directory and copy the contents of the default template into a new template, <code>great.html</code>:</p>
+<div class="highlight"><pre><span></span>cat<span class="w"> </span>_templates/default.html<span class="w"> </span>&gt;<span class="w"> </span>_templates/great.html
+</pre></div>
+<p>Open <code>_templates/great.html</code> and check that the contents are the same as <code>_templates/default.html</code>.</p>
+<h3 id="link-to-home-page">Link to Home Page</h3>
+<p>Use the <code>ROOT</code> variable to add links to other project pages in the template. For example, add an anchor element to <code>_templates/great.html</code> to include a link to the home page (<code>index.html</code>) on every page:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/index.html&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+{{ BODY }}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+<h3 id="title-and-date">Title and Date</h3>
+<p>Use variables to include values from source file metadata, such as <code>title</code> and <code>date</code>:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/index.html&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+{% if date %}
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;date&quot;</span><span class="p">&gt;</span>{{ date }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+{% endif %}
+{{ BODY }}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+<p>Note the use of a <a href="https://jinja.palletsprojects.com/en/stable/templates/#if">Jinja <code>if</code> statement</a> around the <code>date</code> variable. The <code>date</code> paragraph will only appear in the rendered HTML page if the Markdown source file contains <code>date</code> in its metadata. Optionally include a <code>date</code> in source file metadata as follows:</p>
+<pre><code>---
+title: Creative Anecdote
+date: 2025-07-31
+---
+</code></pre><h3 id="static-files">Static Files</h3>
+<p>Add link elements to templates to link to additional CSS style sheets. For example, create a new style sheet in <code>_static</code>:</p>
+<div class="highlight"><pre><span></span>touch<span class="w"> </span>_static/great.css
+</pre></div>
+<p>Open <code>_static/great.css</code> and add the following:</p>
+<div class="highlight"><pre><span></span><span class="p">#</span><span class="nn">title</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">orange</span><span class="p">;</span>
+<span class="w">  </span><span class="k">font-family</span><span class="p">:</span><span class="w"> </span><span class="kc">sans-serif</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Close <code>_static/great_styles.css</code> and open <code>_templates/great.html</code>. Use the <code>ROOT</code> variable again to link to the style sheet in the HTML <code>head</code> element:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/styles.css&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/great.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</pre></div>
+<p>Pages rendered from the <code>great.html</code> template will now have an orange, sans-serif title.</p>
+<h3 id="use-a-custom-template">Use a Custom Template</h3>
+<p>By default, Pykari uses <code>_templates/default.html</code> to render HTML pages. To use a different template, add a <code>template</code> variable to the metadata of the source Markdown file:</p>
+<pre><code>---
+title: Creative Anecdote
+date: 2025-07-31
+template: great
+---
+</code></pre><p>Note that the template name, <code>great</code>, is the name of the template file, <code>great.html</code>, without the <code>.html</code> extension.</p>
+<h3 id="final-template">Final Template</h3>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;UTF-8&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/styles.css&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/_static/great.css&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ ROOT }}/index.html&quot;</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h1</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;title&quot;</span><span class="p">&gt;</span>{{ title }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+{% if date %}
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;date&quot;</span><span class="p">&gt;</span>{{ date }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+{% endif %}
+{{ BODY }}
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How to Configure Your Pykari Project</title>
+  <link rel="stylesheet" href="../_static/styles.css">
+  <link rel="stylesheet" href="../_static/highlight.css">
+</head>
+<body>
+<div id="menu">
+<em><a id="home" href="../index.html">Pykari: Static Sites in a Flash</a></em>
+</div>
+<h1 id="title">How to Configure Your Pykari Project</h1>
+<h2 id="setup">Setup</h2>
+<p>Create a Pykari project with the command line interface:</p>
+<div class="highlight"><pre><span></span>pykari<span class="w"> </span>--setup<span class="w"> </span>reorg
+</pre></div>
+<p>Pykari will create a configuration file, <code>reorg/_pykari.yaml</code>.</p>
+<h2 id="default-settings">Default Settings</h2>
+<p>Open <code>reorg/_pykari.yaml</code>. It contains the following settings:</p>
+<div class="highlight"><pre><span></span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_build</span>
+<span class="nt">ignore</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_build</span>
+<span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="nt">static_ext</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.css</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.js</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.jpg</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.png</span>
+</pre></div>
+<p>Details about each setting are available in the <a href="../user-guide/configuration.html">configuration guide</a>.</p>
+<h2 id="separate-source-and-build-directories">Separate Source and Build Directories</h2>
+<p>By default, Pykari organizes the root project directory (“<code>.</code>”) as the <code>source</code> directory and places the <code>build</code> directory, <code>_build</code>, inside the root/<code>source</code> directory. To separate the source and build directories, change the value for <code>source</code> from <code>.</code> to <code>source</code>. For consistency, change the value for <code>build</code> from <code>_build</code> to <code>build</code>.</p>
+<p>The <code>ignore</code> setting instructs Pykari to ignore files in the listed subdirectories of the source directory. Since the build directory is no longer located inside of the source directory, change the value for <code>ignore</code> from <code>- _build</code> to <code>null</code>.</p>
+<p>Next, open the project <code>Makefile</code>. Change the value of the <code>BLD</code> variable from <code>_build</code> to <code>build</code>:</p>
+<div class="highlight"><pre><span></span><span class="nv">BLD</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>build
+</pre></div>
+<p>Finally, from the command line, change into the project directory, type the following commands, and press enter:</p>
+<div class="highlight"><pre><span></span>mkdir<span class="w"> </span><span class="nb">source</span>
+mv<span class="w"> </span>_static<span class="w"> </span>_templates<span class="w"> </span>index.md<span class="w"> </span><span class="nb">source</span>
+mv<span class="w"> </span>_build<span class="w"> </span>build
+</pre></div>
+<p>The above commands make a new directory named <code>source</code>, move source files and subdirectories into <code>source</code>, and rename <code>_build</code> as <code>build</code>. The project directory now contains the following files and subdirectories:</p>
+<pre><code>myproject/
+    _pykari.yaml
+    build/
+    source/
+        _static/
+            styles.css
+        _templates/
+            default.html
+        index.md
+    Makefile
+</code></pre><p>Note that the <code>_static</code> and <code>_templates</code> directories <strong>must</strong> remain in the <code>source</code> directory.</p>
+<h2 id="works-in-progress">Works in Progress</h2>
+<p>Use the <code>ignore</code> setting to instruct Pykari to ignore files in particular subdirectories in the source directory. For example, type the following and press enter to make <code>drafts</code> and <code>working</code> subdirectories in <code>source</code>:</p>
+<div class="highlight"><pre><span></span>mkdir<span class="w"> </span>source/drafts<span class="w"> </span>source/working
+</pre></div>
+<p>Open <code>_pykari.yaml</code> and change the value for <code>ignore</code> from <code>null</code> to a list containing <code>drafts</code> and <code>working</code>:</p>
+<div class="highlight"><pre><span></span><span class="nt">ignore</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drafts</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">working</span>
+</pre></div>
+<p>Pykari will now ignore any files in <code>source/drafts</code> or <code>source/working</code> when generating a static site.</p>
+<h2 id="static-files">Static Files</h2>
+<p>By default, Pykari copies CSS style sheets, JavaScript scripts, and JPG and PNG images from <code>source/_static</code> to <code>build/_static</code>. Add extensions to the <code>static_ext</code> list in <code>_pykari.yaml</code> to instruct Pykari to copy additional static files. For example, to use TIFF files in a website, open <code>_pykari.yaml</code> and add <code>.tiff</code> to the list:</p>
+<div class="highlight"><pre><span></span><span class="nt">static_ext</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.css</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.js</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.jpg</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.png</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.tiff</span>
+</pre></div>
+<h2 id="final-configuration">Final Configuration</h2>
+<h3 id="_pykariyaml"><code>_pykari.yaml</code></h3>
+<div class="highlight"><pre><span></span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">build</span>
+<span class="nt">ignore</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drafts</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">working</span>
+<span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span>
+<span class="nt">static_ext</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.css</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.js</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.jpg</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.png</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.tiff</span>
+</pre></div>
+<h3 id="makefile"><code>Makefile</code></h3>
+<div class="highlight"><pre><span></span><span class="c"># Default Pykari Makefile</span>
+
+<span class="nv">BLD</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span>site
+
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">generate</span>
+<span class="nf">generate</span><span class="o">:</span>
+<span class="w">	</span>pykari
+
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">clean</span>
+<span class="nf">clean</span><span class="o">:</span>
+<span class="w">	</span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="k">$(</span>BLD<span class="k">)</span>
+</pre></div>
+</body>
+</html>
