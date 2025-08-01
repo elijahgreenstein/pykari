@@ -1,6 +1,6 @@
 /* Pykari site CSS */
 body {
-  max-width: 40rem;
+  max-width: 50rem;
   margin: auto;
   padding: 1rem;
 }
@@ -10,32 +10,14 @@ pre {
 }
 p, li, dt, dd {
   line-height: 1.4rem;
+  line-height: 1.5rem;
+  font-size: 1.2rem;
 }
 pre {
   overflow: auto;
 }
-@media only screen and (max-width: 1200px) {
-  body {
-    max-width: auto;
-    margin: auto;
-    padding: 1rem;
-  }
-  p, li, dt, dd {
-    line-height: 1.5rem;
-    font-size: 1.2rem;
-  }
-  pre, pre span, code {
-    font-size: 1rem;
-  }
-}
-@media (max-width: 600px) {
-  p, li, dt, dd {
-    line-height: 1.5rem;
-    font-size: 1.2rem;
-  }
-  pre, pre span, code {
-    font-size: 1rem;
-  }
+pre, pre span, code {
+  font-size: 0.9rem;
 }
 a#home {
   text-decoration: none;
