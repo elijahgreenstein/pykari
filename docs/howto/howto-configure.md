@@ -1,5 +1,5 @@
 ---
-title: How to Configure Your Pykari Project
+title: How to Configure Your Project
 ---
 
 # Setup

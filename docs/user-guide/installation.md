@@ -1,8 +1,6 @@
 ---
-title: Pykari Installation
+title: Installation
 ---
-
-## Installation
 
 Pykari depends on two plugin extensions for [Markdown-It-Py][mditpy]: [Heading, MD][headingmd] and [Highlight-It][hlit]. Follow the installation instructions for each plugin. Then, clone the [Pykari repository][pykari], change into the repository directory, and install Pykari with `pip`:
 

@@ -1,5 +1,5 @@
 ---
-title: Pykari Project Organization
+title: Project Organization
 ---
 
 The organization of a Pykari project is loosely based on [Sphinx][sphinx]. When you use the [command line tools](cli.html) to set up a Pykari project, the setup tool creates the following files and subdirectories in the project directory:

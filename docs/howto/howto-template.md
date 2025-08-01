@@ -1,5 +1,5 @@
 ---
-title: How to Write a Pykari Template
+title: How to Write a Template
 ---
 
 # Setup

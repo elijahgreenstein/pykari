@@ -1,5 +1,5 @@
 ---
-title: "Pykari Documentation"
+template: index
 ---
 
 Pykari is a simple static site generator written in Python. The name comes from the Japanese word "pikari" (ピカリ), meaning a "flash of light."
@@ -15,6 +15,6 @@ Pykari is a simple static site generator written in Python. The name comes from 
 
 # How-To Guides
 
-- [How to Write a Pykari Template](howto/howto-template.html)
-- [How to Configure Your Pykari Project](howto/howto-configure.html)
+- [How to Write a Template](howto/howto-template.html)
+- [How to Configure Your Project](howto/howto-configure.html)
 

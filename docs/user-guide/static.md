@@ -1,5 +1,5 @@
 ---
-title: Pykari Static Files and Templates
+title: Static Files and Templates
 ---
 
 # Static Files

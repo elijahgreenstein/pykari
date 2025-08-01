@@ -1,5 +1,5 @@
 ---
-title: Pykari Markdown
+title: Markdown
 ---
 
 Pykari generates HTML webpages in the build directory from Markdown files in the source directory. Add Markdown files with the extension `.md` to the source directory to add new pages to your website.

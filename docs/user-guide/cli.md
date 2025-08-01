@@ -1,5 +1,5 @@
 ---
-title: Pykari Command Line Interface
+title: Command Line Interface
 ---
 
 Pykari comes with a command line tool, `pykari`, to set up and build projects. Type the following command and press enter to set up a new project in `myproject`:

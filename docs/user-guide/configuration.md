@@ -1,5 +1,5 @@
 ---
-title: Pykari Project Configuration
+title: Project Configuration
 ---
 
 The `_pykari.yaml` file provides configuration for a Pykari project. The default configuration file created with `pykari --setup` is:
