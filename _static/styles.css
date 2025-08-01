@@ -14,6 +14,15 @@ p, li, dt, dd {
 pre {
   overflow: auto;
 }
+@media only screen and (max-width: 1000px) {
+  p, li, dt, dd {
+    line-height: 1.5rem;
+    font-size: 1.2rem;
+  }
+  pre, pre span, code {
+    font-size: 1rem;
+  }
+}
 @media (max-width: 600px) {
   p, li, dt, dd {
     line-height: 1.5rem;
