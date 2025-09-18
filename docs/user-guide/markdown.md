@@ -41,6 +41,7 @@ The core [Markdown-It-Py strikethrough plugin][mditpy-core-plugins] is enabled. 
 
 The Markdown-It-Py [definition list plugin][mditpy-deflist] is enabled:
 
+
 ```markdown
 Item 1
 : Definition, first paragraph.
@@ -51,6 +52,15 @@ Item 2
 ~ Compact definition, first paragraph.
 ~ Compact definition, second paragraph.
 ```
+
+## Attributes
+
+The Markdown-It-Py [attributes plugin][mditpy-attrs] is enabled. Specify id, class, and key/value attributes inside curly braces:
+
+```markdown
+![alternative text for image](path/to/img.jpg){#id .class key=value}
+```
+
 
 # Links
 
@@ -180,6 +190,7 @@ Note that the example above uses the default `ROOT` variable to indicate the rel
 [jinja]: https://jinja.palletsprojects.com/en/stable/
 [jinja-expr]: https://jinja.palletsprojects.com/en/stable/templates/#expressions
 [mditpy-anchors]: https://mdit-py-plugins.readthedocs.io/en/latest/#heading-anchors
+[mditpy-attrs]: https://mdit-py-plugins.readthedocs.io/en/latest/#attributes
 [mditpy-commonmark]: https://markdown-it-py.readthedocs.io/en/latest/using.html#the-parser
 [mditpy-core-plugins]: https://markdown-it-py.readthedocs.io/en/latest/plugins.html
 [mditpy-deflist]: https://mdit-py-plugins.readthedocs.io/en/latest/#definition-lists
