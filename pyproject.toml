@@ -16,7 +16,7 @@ dependencies = [
   "highlight-it",
   "jinja2",
   "markdown-it-py",
-  "mdit-py-plugins",
+  "mdit-py-plugins>=0.5",
   "pygments",
   "pyyaml",
 ]

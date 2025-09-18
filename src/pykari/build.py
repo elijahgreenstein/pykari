@@ -10,6 +10,7 @@ import jinja2
 import yaml
 from markdown_it import MarkdownIt
 from mdit_py_plugins.anchors import anchors_plugin
+from mdit_py_plugins.attrs import attrs_plugin
 from mdit_py_plugins.deflist import deflist_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 
@@ -202,6 +203,7 @@ def md2html(md: Path, src: Path) -> dict[Any, Any]:
         .use(anchors_plugin, max_level=3)
         .use(deflist_plugin)
         .use(front_matter_plugin)
+        .use(attrs_plugin)
         .use(headingmd_plugin, shift=1)
         .use(highlight_plugin)
     )
