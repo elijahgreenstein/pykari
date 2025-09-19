@@ -2,6 +2,8 @@
 
 from pathlib import Path
 import shutil
+import sys
+import traceback
 from typing import Any
 
 from headingmd import headingmd_plugin
@@ -34,18 +36,41 @@ def is_updated(source: Path, build: Path) -> bool:
     return build.is_file() and (source.stat().st_mtime < build.stat().st_mtime)
 
 
-def get_config(path: Path) -> dict[str, str]:
+def handle_exc(msg: str, details: str | None, tb: str | None = None) -> None:
+    """Handle exceptions.
+
+    :param msg: Top-level error/warning message.
+    :param tb: Optional traceback
+    :param details: Optional details about the error.
+    """
+    print(f"\033[91mERROR: {msg}\033[0m\n")
+    if details:
+        print(details)
+        print()
+    if tb:
+        print("Traceback:\n")
+        for line in tb.splitlines():
+            print(f"    {line}")
+        print()
+    sys.exit(1)
+
+
+def get_config(path: Path) -> dict[str, str] | None:
     """Get configuration file.
 
     :param path: Path to configuration file.
     :returns: Configuration dictionary.
     """
-    if not path.exists():
-        raise FileNotFoundError(
-            f"Missing configuration file `{path}` in source directory."
-        )
-    with open(path, encoding="utf-8") as f:
-        return yaml.safe_load(f.read())
+    try:
+        with open(path, encoding="utf-8") as f:
+            return yaml.safe_load(f.read())
+    except FileNotFoundError:
+        msg = f"Unable to find configuration file `{path}`."
+        details = "> Did you set up a Pykari project?\n"
+        details += "> Check that you are in the root project directory."
+        tb = traceback.format_exc()
+        handle_exc(msg, details, tb)
+        return None
 
 
 def get_env(tpl_dir: Path) -> jinja2.Environment:
@@ -220,8 +245,8 @@ def md2html(md: Path, src: Path) -> dict[Any, Any]:
 
 def generate() -> None:
     """Generate static site."""
-    print("\033[94mChecking for updates ...\033[0m")
     conf = get_config(CONFIGURATION)
+    print("\033[94mChecking for updates ...\033[0m")
     src = Path(conf["source"])
     bld = Path(conf["build"])
     static_ext = conf["static_ext"]
