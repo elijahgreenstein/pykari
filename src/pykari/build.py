@@ -170,7 +170,14 @@ def check_build(
     time of last modification of the build file.
     """
     # Load data
-    data = md2html(md, src)
+    try:
+        data = md2html(md, src)
+    except ValueError:
+        msg = f"{md} does not begin with complete YAML metadata."
+        details = "> All markdown files must begin with a YAML block.\n"
+        details += "> Refer to the Pykari documentation on Markdown for details."
+        tb = traceback.format_exc()
+        handle_exc(msg, details, tb)
     # Set template name to "default" or user-designated name
     tpl_name = "default"
     if "template" in data:
