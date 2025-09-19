@@ -24,7 +24,7 @@ def setup(dirname: Path) -> None:
                 "source": ".",
                 "build": "_build",
                 "ignore": ["_build"],
-                "static_ext": [".css", ".js", ".jpg", ".png"]
+                "static_ext": [".css", ".js", ".jpg", ".png"],
             }
         ),
         "Makefile": "\n".join(
