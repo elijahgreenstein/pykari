@@ -67,6 +67,7 @@ def get_config(path: Path) -> dict[str, str] | None:
     except FileNotFoundError:
         msg = f"Unable to find configuration file `{path}`."
         details = "> Did you set up a Pykari project?\n"
+        details += "    - Usage: $ pykari --setup <PROJECT-NAME>\n"
         details += "> Check that you are in the root project directory."
         tb = traceback.format_exc()
         handle_exc(msg, details, tb)
