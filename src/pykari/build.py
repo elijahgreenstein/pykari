@@ -168,6 +168,9 @@ def check_build(
     of last modification of the build file.
     3. The time of last modification of the template file is *later than* the
     time of last modification of the build file.
+
+    This function does not build from source if the above conditions are met. It
+    also does not build from source if the metadata contain `draft: True`.
     """
     # Load data
     try:
@@ -178,6 +181,9 @@ def check_build(
         details += "> Refer to the Pykari documentation on Markdown for details."
         tb = traceback.format_exc()
         handle_exc(msg, details, tb)
+    # Skip build if draft file
+    if ("draft" in data) and data["draft"]:
+        return False
     # Set template name to "default" or user-designated name
     tpl_name = "default"
     if "template" in data:

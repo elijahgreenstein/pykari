@@ -6,6 +6,13 @@ Pykari generates HTML webpages in the build directory from Markdown files in the
 
 When you use the [Pykari command line tools](cli.html) to generate your website, Pykari will look for all files with the extension `.md` in the source directory, convert the contents to HTML, and write corresponding HTML files in the build directory.
 
+**Note:** You can mark files as "drafts" in the YAML [metadata block](#metadata).
+Pykari will not build files with the following field in the metadata:
+
+```yaml
+draft: true
+```
+
 # CommonMark
 
 Pykari uses the [Markdown-It-Py][mditpy] Markdown parser to convert Markdown to HTML. The Pykari parser is configured with the [default CommonMark settings][mditpy-commonmark], and you can follow [CommonMark][commonmark] conventions to format source documents.

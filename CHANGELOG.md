@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.3.0
+
+- Add ability to mark files as drafts
+
 ## 0.2.0
 
 - Handle exceptions and errors with custom messages
