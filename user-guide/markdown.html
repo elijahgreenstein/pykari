@@ -13,6 +13,10 @@
 <h1 id="title">Markdown</h1>
 <p>Pykari generates HTML webpages in the build directory from Markdown files in the source directory. Add Markdown files with the extension <code>.md</code> to the source directory to add new pages to your website.</p>
 <p>When you use the <a href="cli.html">Pykari command line tools</a> to generate your website, Pykari will look for all files with the extension <code>.md</code> in the source directory, convert the contents to HTML, and write corresponding HTML files in the build directory.</p>
+<p><strong>Note:</strong> You can mark files as “drafts” in the YAML <a href="#metadata">metadata block</a>.
+Pykari will not build files with the following field in the metadata:</p>
+<div class="highlight"><pre><span></span><span class="nt">draft</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</pre></div>
 <h2 id="commonmark">CommonMark</h2>
 <p>Pykari uses the <a href="https://markdown-it-py.readthedocs.io/en/latest/">Markdown-It-Py</a> Markdown parser to convert Markdown to HTML. The Pykari parser is configured with the <a href="https://markdown-it-py.readthedocs.io/en/latest/using.html#the-parser">default CommonMark settings</a>, and you can follow <a href="https://commonmark.org/">CommonMark</a> conventions to format source documents.</p>
 <h2 id="additional-markdown-settings">Additional Markdown Settings</h2>
